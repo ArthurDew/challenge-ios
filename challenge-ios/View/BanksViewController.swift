@@ -47,15 +47,36 @@ class BanksViewController : UIViewController, UITableViewDelegate {
 
 extension BanksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.banks.count ?? 0
+        var totalBanks = 0
+        
+        for resource in viewModel?.banks ?? [] {
+            for parent in resource.parent_banks {
+                for _ in parent.banks {
+                    totalBanks = totalBanks + 1
+                }
+            }
+        }
+        print(totalBanks)
+        
+        return totalBanks
     }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeCell
+        var index = 0
+
+        for resource in viewModel?.banks ?? [] {
+            for parent in resource.parent_banks {
+             for bank in parent.banks {
+                if index == indexPath.row {
+                    cell.set(bank: (bank))
+                }
+                index = index + 1
+              }
+            }
+        }
         
-        cell.set(resource: (viewModel?.banks[indexPath.row])!)
-        
-        cell.selectionStyle = .default
+        cell.selectionStyle = .none
         
         return cell
     }

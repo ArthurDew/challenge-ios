@@ -23,8 +23,8 @@ class HomeCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(resource: Resource) {
-        nameLabel.text = resource.parent_banks[0].banks[0].name + " " + getFlag(from: resource.parent_banks[0].banks[0].country_code)
+    func set(bank: Bank) {
+        nameLabel.text = getFlag(from: bank.country_code) + " " + bank.name
     }
     
     func configNameLabel() {
