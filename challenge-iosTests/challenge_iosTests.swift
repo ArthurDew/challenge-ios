@@ -18,15 +18,32 @@ class challenge_iosTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testRequestGetResources() throws {
+        let viewModel = BanksViewModel()
+        
+        if viewModel.resources.count != 0 {
+            XCTAssert(false)
+        }
+        
+        viewModel.getBanks {
+            if viewModel.resources.count > 0 {
+                XCTAssert (true)
+            }
+        }
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testOrderResources() throws {
+        let country = String((NSLocale.preferredLanguages[0]).prefix(2))
+        let viewModel = BanksViewModel()
+        
+        viewModel.getBanks {
+            viewModel.orderBanks {
+                if viewModel.resources[0].parent_banks[0].banks[0].country_code.caseInsensitiveCompare(country) == ComparisonResult.orderedSame {
+                    XCTAssert (true)
+                } else {
+                    XCTAssert (false)
+                }
+            }
         }
     }
 
