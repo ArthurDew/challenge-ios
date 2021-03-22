@@ -49,14 +49,13 @@ extension BanksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var totalBanks = 0
         
-        for resource in viewModel?.banks ?? [] {
+        for resource in viewModel?.resources ?? [] {
             for parent in resource.parent_banks {
                 for _ in parent.banks {
                     totalBanks = totalBanks + 1
                 }
             }
         }
-        print(totalBanks)
         
         return totalBanks
     }
@@ -65,7 +64,7 @@ extension BanksViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell", for: indexPath) as! HomeCell
         var index = 0
 
-        for resource in viewModel?.banks ?? [] {
+        for resource in viewModel?.resources ?? [] {
             for parent in resource.parent_banks {
              for bank in parent.banks {
                 if index == indexPath.row {

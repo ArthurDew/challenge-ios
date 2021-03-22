@@ -22,7 +22,7 @@ struct Pagination: Decodable {
 // MARK: - Resource
 struct Resource: Decodable {
     let country_code: String?
-    let parent_banks: [ParentBank]
+    var parent_banks: [ParentBank]
 }
 
 // MARK: - ParentBank
